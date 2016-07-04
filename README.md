@@ -4,9 +4,7 @@ linux-csgo-external
 Linux x86 cheat for x86 and x64 linux systems
 
 Compiled and tested on:
-- Xubuntu
-- Archlinux
-- Debian (Jessie)
+- Arch Linux Multilib
 
 ![hackin](http://i.imgur.com/fiKLjnQ.jpg)
 
@@ -14,21 +12,17 @@ Credits:
 - Original author: s0beit
 - Original author credits: BoToX & buFFy
 - Maintainer/Updater: laazyboy13 & community
-- X64 fix : owerosu
-
-#Pull Request #4 - don't make an issue if this is your problem. I don't give a shit if you cant solve a dependency issue.
-
-# Create Toggle Keybind
-
-## Synopsis
-* Solves #2 
-    - (Kind of)
-    - No toggle for just radar.
-* Press a keybind to toggle the cheat.
+- X64 fix + Triggerbotm, NoFlash : owerosu
 
 ## Notes
-* Requires Xlib (both `libx11-dev:i386` and `libx11-dev`, `# apt-get install libx11-dev libx11-dev:i386` on Debian based systems
+* Requires Xlib (both `libx11-dev:i386` and `libx11-dev`). XOSD (`xosd-bin`) is for the ingame overlay. It's optional though.
 * Bind in this Pull Request is Ctrl+Shift+X, but this is not optimal for gameplay.
 
 ## Known Bugs
-* Does not work with Numlock enabled.
+* Triggering does not work with Numlock enabled.
+
+## Features
+* ESP (s0beit)
+* NoFlash (owerosu)
+* Triggerbot (owersu, fix by kaby47)
+* Overlay (kaby47)

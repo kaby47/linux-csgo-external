@@ -10,29 +10,35 @@ using namespace std;
 bool shouldGlow = true;
 
 
+void refreshOverlay(unsigned int state)
+{
+  char cmd[256];
+  sprintf(cmd, "echo \"Triggerbot: %i\" | osd_cat -A left -p bottom -f -*-*-bold-*-*-*-24-120-*-*-*-*-*-* -cred -s 1", state);
+  system(cmd);
+}
+
+
 int main() {
     if (getuid() != 0) {
         cout << "You should run this as root." << endl;
         return 0;
     }
 
-    cout << "s0beit linux hack version 1.3" << endl;
+    cout << "CSGO Linux External hack version 1.4 (trig branch)" << endl;
 
-    log::init();
-    log::put("Hack loaded...");
 
 	Display* dpy = XOpenDisplay(0);
 	Window root = DefaultRootWindow(dpy);
 	XEvent ev;
 
 	int keycode = XKeysymToKeycode(dpy, XK_X);
-	unsigned int modifiers = 0;
+	unsigned int modifiers = ControlMask | ShiftMask;
 
 	XGrabKey(dpy, keycode, modifiers, root, false,
 				GrabModeAsync, GrabModeAsync);
 
 	XSelectInput(dpy, root, modifiers);
-	
+
     remote::Handle csgo;
 
     while (true) {
@@ -111,17 +117,16 @@ int main() {
 
     csgo.m_addressOfLocalPlayer = csgo.GetCallAddress((void*)(foundLocalPlayerLea+0x7));
 
-    csgo.m_shouldTrigger = false;
+    csgo.m_shouldTrigger = true; //Enabled by default
     while (csgo.IsRunning()) {
 		while (XPending(dpy) > 0) {
 			XNextEvent(dpy, &ev);
 			switch (ev.type) {
 				case KeyPress:
-					
+
 					XUngrabKey(dpy, keycode, modifiers, root);
-					//shouldGlow = !shouldGlow;
 					csgo.m_shouldTrigger = !csgo.m_shouldTrigger ;
-					cout << "Toggling trigger... " << csgo.m_shouldTrigger << endl;
+					refreshOverlay(csgo.m_shouldTrigger);
 					break;
 				default:
 					break;
@@ -136,7 +141,6 @@ int main() {
 	        	hack::Glow(&csgo, &client);
 	usleep(10);
 	}
-//    cout << "Game ended." << endl;
 
     return 0;
 }
